@@ -20,7 +20,7 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::get('/', function () {
-    return view('pegawai.index');
+    return view('auth.login');
 });
 
 // Route::get('/', 'App\Http\Controllers\PegawaiController@index')->name('pegawai.index');

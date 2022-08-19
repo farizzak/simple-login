@@ -52,7 +52,8 @@
     <div class="card card-info card-outline">
         <div class="card-body">
      <a href="{{ url('cetak-pegawai')}}" target="blank_" class="btn btn-primary">Cetak<i class="fa-solid fa-print"><i></a>
-        
+        <a href="#"class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Import</a>
+    </div>
         
      <br/>
     <table class="table-bordered table">
@@ -73,7 +74,7 @@
         <td>{{@$value->nip }}</td>
         <td><a class="btn btn-info" href="{{url('pegawai/'.$value->id.'/edit')}}">Update</a></td>
         <td class="text-center">
-            <form action="{{ url('pegawai/'.$value->id) }}" method="POST">
+            <form action="{{ url('pegawai/delete/'.$value->id) }}" method="POST">
                 @csrf
             <input type="hidden" name="_method" value="DELETE">
              <button class="btn btn-danger" type="submit">DELETE</button>
@@ -81,6 +82,43 @@
      </td>
     </tr>
     @endforeach
+</table>
+</div>
+<!-- Button trigger modal -->
+<button type="button">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Import Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="#" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <input type="file" name="file" required>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Selesai</button>
+        <button type="submit" class="btn btn-primary">Import</button>
+      </div>
+    </div>
+  </div>
+</div>
+   
+   
+   
+   
+   
+   
+   
     @endif    
 </table>
         

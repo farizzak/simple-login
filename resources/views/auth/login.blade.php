@@ -1,16 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<!-- body {
-    height: 100%;
-    background-color: #222d32 !important;
-.global-container{
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #48e248;
-} -->
+
 
 <head>
     <!-- Required meta tags -->
@@ -25,32 +16,43 @@
 </head>
  
 <body>
-    <div class="row justify-content-center" style="margin-top: 100px">
-        <div class="col-lg-6">
+    <div class="row justify-content-center align-items-center h-100" style="margin-top: 10px">
+    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
             <main class="form-registration">
-               
-            <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
-                <form action="/login" method="POST">
+            <section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    
+      <div class="card bg-dark text-white" style="border-radius: 2rem;">
+          <div class="card-body p-5 text-center">
+            <div class="mb-md-0 mt-md-0 pb-0">
+
+            <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+            <p class="text-white-50 mb-5">Please enter your login and password!</p>
+                
+            <form action="/login" method="POST">
                     @csrf
-                    <div class="form-floating">
-                        <input type="email" class="form-control " name="email" id="email" required
-                            value="{{ old('email') }}" placeholder="name@example.com">
-                        <label for="email">Email address</label>
-                    </div>
-                    
+                  
+                    <div class="form-outline form-white mb-4">
+                        <input type="email" class="form-control form-control-lg"name="email" id="email" required
+                            value="{{ old('email') }}" placeholder="Email">
+                        <label for="email"></label>
+                   
+       
                     <div 
-                    class="form-floating">
-                        <input type="password" class="form-control rounded-bottom" name="password" id="password" required
+                    class="form-outline form-white mb-4">
+                        <input type="password" class="form-control form-control-lg" name="password" id="password" required
                             placeholder="Password">
-                        <label for="password">Password</label>
+                        <label for="password"></label>
+                    
                     </div>
-                    <button class="w-100 btn btn-lg btn-danger mt-3" type="submit">Login</button>
+                 
+                    <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
                 </form>
-                <small class="d-block mt-3">Doesn't have an account? <a class="text-danger" href="/register">
-                        Register
-                        Now!</a></small>
+                <small class="d-block mt-3">Doesn't have an account? <a class="text-danger 50 fw-bold" href="/register">
+                        Register Now!</a></small>
             </main>
-        </div>
+
     
     </div>
  

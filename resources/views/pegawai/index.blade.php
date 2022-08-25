@@ -10,9 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
  
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
- 
+ <link rel="stylesheet" href=" https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+        
     <title>Dashboard</title>
 </head>
  
@@ -28,10 +29,10 @@
         </form>
     <div
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    <script src="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
-</body>
+
  
 </html>
 <br/>
@@ -44,26 +45,34 @@
     <br/><br/>
     <form method="GET" action="{{url('pegawai') }}">
         <input type="text" name="keyword" value="{{@$keyword}}"/>
-        <button type="submit">Search</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+   
+   
     </form>
 <br/>
     <div class="content">
-    <a class="btn btn-success" href="{{ url('exportpegawai')}}">Export</a>
+    
     <div class="card card-info card-outline">
-        <div class="card-body">
-     <a href="{{ url('cetak-pegawai')}}" target="blank_" class="btn btn-primary">Cetak<i class="fa-solid fa-print"><i></a>
-        <a href="#"class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Import</a>
-    </div>
+        <div class="card-header">   
+             <a href="{{ url('exportpegawai')}}" class="btn btn-success">Export</a>
+             <!-- <a href="{{ url('importpegawai') }}" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Import</a> -->
+            <a href="{{ url('cetak-pegawai')}}" target="blank_" class="btn btn-primary">Cetak<i class="fa-solid fa-print"><i></a>
+            </div>
+           
+     <div class="card-body">
+
         
      <br/>
-    <table class="table-bordered table">
-        <tr>
+    <table id="example" class="table-bordered table">
+    <thead class="thead-dark">
+    <tr>
          <th>Nama</th> 
          <th>Tanggal Lahir</th> 
          <th>Gelar</th> 
          <th>NIP</th> 
          <th colspan="2">AKSI</th>
-    </tr>
+   
+        </tr>
     @if(isset($datas))
     @foreach($datas as $key=>$value)
 
@@ -86,7 +95,7 @@
 </div>
 <!-- Button trigger modal -->
 <button type="button">
-  Launch demo modal
+
 </button>
 
 <!-- Modal -->
@@ -100,10 +109,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="#" method="post" enctype="multipart/form-data">
+        <form action="{{ url('importpegawai') }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="form-group">
-                <input type="file" name="file" required>
+                <input type="file" name="file" required="required">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Selesai</button>
@@ -112,14 +121,19 @@
     </div>
   </div>
 </div>
+</body>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+   <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    -->
+   <script>
+    $(document).ready(function () {
+    $('#example').DataTable();
+});
+   </script>
    
    
-   
-   
-   
-   
-   
-    @endif    
-</table>
+ 
+   @endif    
+
         
 @endsection

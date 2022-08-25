@@ -1,5 +1,4 @@
-
-        <form method="POST" action="{{ route('register') }}">
+<form method="POST" action="{{ route('register') }}">
             @csrf
 
             <div>
@@ -48,5 +47,4 @@
                     {{ __('Register') }}
                 </x-jet-button>
             </div>
-        </form>
-   
+         </form>

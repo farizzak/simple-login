@@ -6,6 +6,7 @@ use App\Http\Controllers\ContohController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PaginationController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\EmailController;
 
 
 /*
@@ -64,34 +65,38 @@ Route::get('pegawai', 'App\Http\Controllers\PegawaiController@index')->name('peg
 // Route::get('/pagination/show_api',[PaginationController::class,'show_api']);
 
 
-
+Route::post('/importpegawai','App\Http\Controllers\PegawaiController@pegawaiimportexcel')->name('importpegawai');
 Route::get('/exportpegawai','App\Http\Controllers\PegawaiController@pegawaiexport')->name('exportpegawai');
 Route::get('cetak-pegawai', 'App\Http\Controllers\PegawaiController@cetakPegawai')->name('cetak-pegawai');
-// Route::get('/login', 'App\Http\Controllers\Auth\LoginController@logout')->name('/login');
-Route::get('send-mail', function () {
 
-    $details = [
-        'title' => 'Mail from Medikre.com',
-        'body' => 'This is for testing email using smtp'
-    ];
+// Route::get('/login', 'App\Http\Controllers\Auth\LoginController@logout')->name('/login');
+// Route::get('send-mail', function () {
+
+//     $details = [
+//         'title' => 'Mail from Medikre.com',
+//         'body' => 'This is for testing email using smtp'
+//     ];
 
    
-    \Mail::to('faathirizak00@gmail.com')->send(new \App\Mail\MyTestMail($details));
+//     \Mail::to('faathirizak00@gmail.com')->send(new \App\Mail\MyTestMail($details));
 
-    dd("Email is Sent.");
-});
+//     dd("Email is Sent.");
+// });
+
+route::get('email',[EmailController::class,'index']);
 
 
+// Auth::routes(['verify=>true']);
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified'
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
 
 
 

@@ -1,18 +1,18 @@
-<?php
+<!-- <?php
 
-namespace App\Mail;
+// namespace App\Mail;
   
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+// use Illuminate\Bus\Queueable;
+// use Illuminate\Contracts\Queue\ShouldQueue;
+// use Illuminate\Mail\Mailable;
+// use Illuminate\Queue\SerializesModels;
 
-class MyTestMail extends Mailable
-{
-    use Queueable, SerializesModels;
+// class MyTestMail extends Mailable
+// {
+//     use Queueable, SerializesModels;
 
-    public $details;
+//     public $details;
 
     /**
      * Create a new message instance.
@@ -20,10 +20,10 @@ class MyTestMail extends Mailable
      * @return void
      */
 
-    public function __construct($details)
-    {
-       $this->details = $details;
-    }
+    // public function __construct($details)
+    // {
+    //    $this->details = $details;
+    // }
 
   
     /**
@@ -31,9 +31,9 @@ class MyTestMail extends Mailable
      *
      * @return $this
      */
-    public function build()
-    {
-        return $this->subject('Mail from Medikre.com')
-                    ->view('emails.myTestMail');
-    }
-}
+//     public function build()
+//     {
+//         return $this->subject('Mail from Medikre.com')
+//                     ->view('emails.myTestMail');
+//     }
+// } -->

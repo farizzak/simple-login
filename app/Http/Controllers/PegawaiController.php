@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pegawai;
 
 use App\Exports\PegawaiExport;
+use App\Imports\PegawaiImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 
@@ -51,6 +52,18 @@ class Pegawaicontroller extends Controller
         
         return Excel::download(new PegawaiExport,'pegawai.xlsx');
     }
+
+    public function pegawaiimportexcel(Request $request)
+    {  
+        $file = $request->file('file');
+        $namaFile = $file->getClientOriginalName();
+        $file->move ('DataPegawai', $namaFile);
+    
+        Excel::import(new PegawaiImport,public_path('/DataPegawai'.$namaFile));
+        return redirect('pegawai');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *

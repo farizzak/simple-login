@@ -85,6 +85,9 @@ class Pegawaicontroller extends Controller
      */
     public function store(PegawaiRequest $request)
     {
+       $request->validate([
+        'tanggal_lahir'=>'required'
+       ]);
         $model = new Pegawai;
         $model->nama = $request->nama;
         $model->tanggal_lahir = $request->tanggal_lahir;
@@ -128,9 +131,12 @@ class Pegawaicontroller extends Controller
      */
     public function update(PegawaiRequest $request, $id)
     {
+        $request->validate([
+            'tanggal_lahir'=>'required'
+           ]);
         $model = Pegawai::find($id);
         $model->nama = $request->nama;
-        $model->tanggal_lahir = $request->tanggal_lahir;
+        $model->tanggal_lahir = $request->date;
         $model->gelar = $request->gelar;
         $model->nip = $request->nip;
         $model->save();

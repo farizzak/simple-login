@@ -15,7 +15,7 @@
                  <div class="col-md-6">Tanggal Lahir</div>
         
                 <div class="col-md-6">
-                <input class="form-control"type="text" name="tanggal_lahir" value="{{$model->tanggal_lahir}}"> 
+                <input class="form-control"type="date" name="tanggal_lahir" value="{{$model->tanggal_lahir}}"> 
                 @foreach($errors->get('tanggal_lahir') as $msg)
                         <p class="text-danger">{{ $msg }}</p>
                      @endforeach

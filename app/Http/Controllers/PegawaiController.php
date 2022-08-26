@@ -136,9 +136,10 @@ class Pegawaicontroller extends Controller
            ]);
         $model = Pegawai::find($id);
         $model->nama = $request->nama;
-        $model->tanggal_lahir = $request->date;
+        $model->tanggal_lahir = $request->tanggal_lahir;
         $model->gelar = $request->gelar;
         $model->nip = $request->nip;
+        // dd($model);
         $model->save();
 
         return redirect('pegawai')->with('success', "Data berhasil diperbaharui");

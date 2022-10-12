@@ -65,12 +65,12 @@
      <br/>
     <table id="example" class="table-bordered table">
     <thead class="thead-dark">
-    <tr>
+    <tr style='text-align:center'>
          <th>Nama</th> 
          <th>Tanggal Lahir</th> 
          <th>Gelar</th> 
          <th>NIP</th> 
-         <th colspan="2">AKSI</th>
+         <th colspan="2">Action</th>
    
         </tr>
     @if(isset($datas))

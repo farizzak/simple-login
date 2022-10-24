@@ -82,7 +82,7 @@
         <td>{{@$value->tanggal_lahir }}</td>
         <td>{{@$value->gelar }}</td>
         <td>{{@$value->nip }}</td>
-        <td><a class="btn btn-info" href="{{url('pegawai/'.$value->id.'/edit')}}">Update</a></td>
+        <td class="text-center"><a class="btn btn-info" href="{{url('pegawai/'.$value->id.'/edit')}}">Update</a></td>
         <td class="text-center">
             <form action="{{ url('pegawai/delete/'.$value->id) }}" method="POST">
                 @csrf

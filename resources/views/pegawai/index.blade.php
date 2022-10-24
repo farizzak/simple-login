@@ -45,7 +45,7 @@
     <a class="btn btn-info" href="{{ route('pegawai.create')}}"><b>Tambah </b><i class="fa fa-plus-square" aria-hidden="true"></i></a>
     <br/><br/>
     <form method="GET" action="{{url('pegawai') }}">
-        <input type="text" name="keyword" value="{{@$keyword}}"/>
+        <input type="text" name="keyword"style="background-color:#87805E" value="{{@$keyword}}"/>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
    
    

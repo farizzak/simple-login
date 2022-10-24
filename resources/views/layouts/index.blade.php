@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
    @yield('style')
     </head>
-    <body>  
+    <body style="background-color:#3F4E4F">  
     
         <a class="navbar-brand" href="#"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

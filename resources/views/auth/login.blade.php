@@ -15,7 +15,7 @@
     <title>Login</title>
 </head>
  
-<body>
+<body style="background-color:#3F4E4F">
     <div class="row justify-content-center align-items-center h-100" style="margin-top: 10px">
     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
             <main class="form-registration">
@@ -27,7 +27,7 @@
             <div class="mb-md-0 mt-md-0 pb-0">
 
             <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-            <p class="text-white-50 mb-5">Please enter your login and password!</p>
+            <p class="text-white-50 mb-5"><b>Please enter your login and password!</b></p>
                 
             <form action="/login" method="POST">
                     @csrf
@@ -38,8 +38,7 @@
                         <label for="email"></label>
                    
        
-                    <div 
-                    class="form-outline form-white mb-4">
+                    <div class="form-outline form-white mb-4">
                         <input type="password" class="form-control form-control-lg" name="password" id="password" required
                             placeholder="Password">
                         <label for="password"></label>

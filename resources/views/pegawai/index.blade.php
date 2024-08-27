@@ -1,140 +1,298 @@
-@extends('layouts.index')
+@extends('layout')
+
+@section('css')
+<style type="text/css">
+	.datatable-column-width{
+		overflow: hidden; text-overflow: ellipsis; max-width: 200px;
+	}
+</style>
+@endsection
 
 @section('content')
-<!doctype html>
-<html lang="en">
- 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
- 
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
- <link rel="stylesheet" href=" https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
-    
-   <title>Dashboard</title>
-</head>
- 
-<body>
-    <div class="container mt-5">
-        <h1 class="display-4">
-          
-        </h1>
- 
-        <form action="/logout" method="POST">
-            @csrf
-            <button class="btn btn-danger"><b>Logout </b><i class="fa fa-sign-out" aria-hidden="true"></i></button>
-        </form>
-    <div>
 
-    <script src="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-    </script>
+	<!-- Page header -->
+	<div class="page-header page-header-light">
+		<div class="page-header-content header-elements-md-inline">
+			<div class="page-title d-flex">
+				<h4><span class="font-weight-semibold">Home</span> - Data</h4>
+				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+			</div>
+		</div>
+	</div>
+	<!-- /page header -->
 
- 
-</html>
-<br/>
+	<!-- Content area -->
+	<div class="content">
 
-    @if(Session::has('success'))
-    <P class="alert alert-success">{{ Session::get('success')}}</p><br/>
-@endif
-    
-    <a class="btn btn-info" href="{{ route('pegawai.create')}}"><b>Tambah </b><i class="fa fa-plus-square" aria-hidden="true"></i></a>
-    <br/><br/>
-    <form method="GET" action="{{url('pegawai') }}">
-        <input type="text" name="keyword"style="background-color:#87805E" value="{{@$keyword}}"/>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-   
-   
-    </form>
-<br/>
-    <div class="content">
-    
-    <div class="card card-info card-outline">
-        <div class="card-header" style="background-color:#2C3639">
-             <a href="{{ url('exportpegawai')}}" class="btn btn-success"><b>Export </b><i class="fa fa-external-link-square" aria-hidden="true"></i></a>
-             <!-- <a href="{{ url('importpegawai') }}" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Import</a> -->
-            <a href="{{ url('cetak-pegawai')}}" target="blank_" class="btn btn-primary"><b>Cetak </b><i class="fa-solid fa-print"></i></a>
+		<!-- Hover rows -->
+		<div class="card">
+			<div class="card-header header-elements-inline">
+                <a href="{{ route('pegawai.create')}}"><button type="button" class="btn btn-secondary rounded-round"><i class="icon-add mr-2"></i> Tambah</button></a>
+		    </div>
+
+			<div class="table-responsive">
+                <table class="table datatable-basic table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Gelar</th>
+                            <th>NIP</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
-           
-     <div class="card-body" style="background-color:#87805E">
+		</div>
+		<!-- /hover rows -->
 
+	</div>
+	<!-- /content area -->
+
+    <!-- Danger modal -->
+	<div id="modal_theme_danger" class="modal fade" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-danger" align="center">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<form action="" method="post" id="delform">
+				    @csrf
+				    @method('DELETE')
+					<div class="modal-body" align="center">
+						<h2> Hapus Data? </h2>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link" data-dismiss="modal">Batal</button>
+						<button type="submit" class="btn bg-danger">Hapus</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+    
+
+    
+
+	<!-- /default modal -->
+
+@endsection
+
+@section('js')
+	<!-- Theme JS files -->
+	<script src="{{asset('global_assets/js/plugins/notifications/pnotify.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/notifications/bootbox.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/tables/datatables/datatables.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/forms/selects/select2.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/buttons/spin.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/buttons/ladda.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/daterangepicker.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/anytime.min.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.date.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/picker.time.js')}}"></script>
+	<script src="{{asset('global_assets/js/plugins/pickers/pickadate/legacy.js')}}"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"></script>
+	<script>dayjs.extend(window.dayjs_plugin_utc)</script>
+
+	<script src="{{asset('assets/js/app.js')}}"></script>
+	<script src="{{asset('global_assets/js/demo_pages/components_modals.js')}}"></script>
+	<script src="{{asset('assets/js/custom.js')}}"></script>
+    
+	<script>
+		//modal delete
+		$(document).on("click", ".delbutton", function () {
+		     var url = $(this).data('uri');
+		     $("#delform").attr("action", url);
+		});
         
-     <br/>
-    <table id="example" class="table-bordered table" style="background-color:#87805E">
-    <thead class="thead-dark">
-    <tr style='text-align:center'>
-         <th>Nama</th> 
-         <th>Tanggal Lahir</th> 
-         <th>Gelar</th> 
-         <th>NIP</th> 
-         <th colspan="2">Action</th>
-   
-        </tr>
-    @if(isset($datas))
-    @foreach($datas as $key=>$value)
+        // Accessibility labels
+        $('.pickadate-accessibility').pickadate({
+            labelMonthNext: 'Go to the next month',
+            labelMonthPrev: 'Go to the previous month',
+            labelMonthSelect: 'Pick a month from the dropdown',
+            labelYearSelect: 'Pick a year from the dropdown',
+            selectMonths: true,
+            selectYears: true,
+            format: 'yyyy-mm-dd',
+        });
+		var DatatableBasic = function() {
 
-    <tr style="color:#FEFBF6">
-        <td>{{@$value->nama }}</td>
-        <td>{{@$value->tanggal_lahir }}</td>
-        <td>{{@$value->gelar }}</td>
-        <td>{{@$value->nip }}</td>
-        <td class="text-center"><a class="btn btn-info" href="{{url('pegawai/'.$value->id.'/edit')}}">Update</a></td>
-        <td class="text-center">
-            <form action="{{ url('pegawai/delete/'.$value->id) }}" method="POST">
-                @csrf
-            <input type="hidden" name="_method" value="DELETE">
-             <button class="btn btn-danger" type="submit">DELETE</button>
-        </form>
-     </td>
-    </tr>
-    @endforeach
-</table>
-</div>
-<!-- Button trigger modal -->
-<button type="button">
+		    // Basic Datatable examples
+		    var _componentDatatableBasic = function() {
+		        if (!$().DataTable) {
+		            console.warn('Warning - datatables.min.js is not loaded.');
+		            return;
+		        }
+		        // Setting datatable defaults
+		        $.extend( $.fn.dataTable.defaults, {
+		            autoWidth: false,
+		            columnDefs: [{
+		                orderable: false,
+		                // width: 100,
+		                targets: [ 5 ]
+		            }],
+		            dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+		            language: {
+		                search: '<span>Filter:</span> _INPUT_',
+		                searchPlaceholder: 'Type to filter...',
+		                lengthMenu: '<span>Show:</span> _MENU_',
+		                paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+		            }
+		        });
+		        // Basic datatable
+		        $('.datatable-basic').DataTable({
+                    // "scrollX": true,
+                    order: [[0, "desc"]],
+					processing: true,
+					serverSide: true,
+					// "order": true,
+					ajax: {
+						"url"       :"{{ route("get.data") }}",
+                        "type"      :"POST",
+                        "data"      : {
+                            "_token"    : "{{ csrf_token() }}",
 
-</button>
+                        }
+					},
+					columns: [
+						{
+							data: null,
+							name: null,
+							render: (data, type, row) => {
+								return row.DT_RowIndex;
+							}
+						},
+						{
+							data: 'nama',
+							name: 'nama',
+							
+						},
+                        {
+							data: 'tanggal_lahir',
+							name: 'tanggal_lahir',
+						},
+                        {
+                            data: 'gelar',
+                            name: 'gelar',
+                        },
+                        {
+							data: 'nip',
+							name: 'nip',
+						},
+                        {
+							data: null,
+							name: 'actions',
+							render: (data, type, row) => {
+								let showRef = "{{route('pegawai.show', ':id')}}";
+								showRef = showRef.replace(':id', data?.id);
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Import Data</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{{ url('importpegawai') }}" method="post" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <div class="form-group">
-                <input type="file" name="file" required="required">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Selesai</button>
-        <button type="submit" class="btn btn-primary">Import</button>
-      </div>
-    </div>
-  </div>
-</div>
-</body>
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-   <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    -->
-   <script>
-    $(document).ready(function () {
-    $('#example').DataTable();
-});
-   </script>
-   
-   
- 
-   @endif    
+								let editRef = "{{route('pegawai.edit', ':id')}}";
+								editRef = editRef.replace(':id', data?.id);
 
-        
+								let delUri = "{{route('pegawai.delete', ':id')}}";
+								delUri = delUri.replace(':id', data?.id);
+
+								
+								{
+									
+										var actionButtons =
+										`
+											<div style="text-align: right">
+
+												<a href="${showRef}" class="btn bg-blue btn-icon showbutton btn-icon" data-toggle="tooltip" data-placement="top" title="Show"><i class="icon-search4"></i></a>
+
+												<a href="${editRef}" class="btn bg-purple btn-icon" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-pencil7"></i></a>
+
+                                                <a href="#" class="btn btn-danger btn-icon delbutton" data-toggle="modal" data-target="#modal_theme_danger" data-uri="${delUri}"data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-bin"></i></a>
+
+											</div>
+										`
+								} 
+								
+
+								return actionButtons;
+							}
+						}
+					]
+				});
+		        // Alternative pagination
+		        $('.datatable-pagination').DataTable({
+		            pagingType: "simple",
+		            language: {
+		                paginate: {'next': $('html').attr('dir') == 'rtl' ? 'Next &larr;' : 'Next &rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr; Prev' : '&larr; Prev'}
+		            }
+		        });
+		        // Datatable with saving state
+		        $('.datatable-save-state').DataTable({
+		            stateSave: true
+		        });
+		        // Scrollable datatable
+		        var table = $('.datatable-scroll-y').DataTable({
+		            autoWidth: true,
+		            scrollY: 300
+		        });
+		        // Resize scrollable table when sidebar width changes
+		        $('.sidebar-control').on('click', function() {
+		            table.columns.adjust().draw();
+		        });
+		    };
+		    // Select2 for length menu styling
+		    var _componentSelect2 = function() {
+		        if (!$().select2) {
+		            console.warn('Warning - select2.min.js is not loaded.');
+		            return;
+		        }
+		        // Initialize
+		        $('.dataTables_length select').select2({
+		            minimumResultsForSearch: Infinity,
+		            dropdownAutoWidth: true,
+		            width: 'auto'
+		        });
+		    };
+		    //
+		    // Return objects assigned to module
+		    //
+		    return {
+		        init: function() {
+		            _componentDatatableBasic();
+		            _componentSelect2();
+		        }
+		    }
+		}();
+		// Initialize module
+		// ------------------------------
+		document.addEventListener('DOMContentLoaded', function() {
+		    DatatableBasic.init();
+		});
+	</script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+	        // Default style
+	        @if(session('error'))
+	            new PNotify({
+	                title: 'Error',
+	                text: '{{ session('error') }}.',
+	                icon: 'icon-blocked',
+	                type: 'error'
+	            });
+            @endif
+            @if ( session('success'))
+	            new PNotify({
+	                title: 'Success',
+	                text: '{{ session('success') }}.',
+	                icon: 'icon-checkmark3',
+	                type: 'success'
+	            });
+            @endif
+		});
+	</script>
 @endsection

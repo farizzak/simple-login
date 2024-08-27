@@ -29,6 +29,7 @@ Route::get('/halo', function() {
     return "Halo semuanya";
 });
 
+Route::get('/logout',  'App\Http\Controllers\LoginController@logout');
 
 Route::get('home', [HomeController::class,'index']);
 Route::get('home/show_html',[HomeController::class,'show_html']);
@@ -45,13 +46,32 @@ Route::post('home/contoh',[HomeController::class,'contoh_post']);
 // Route::resource('contoh',ContohController::class);
 // Route::resource('Pegawai',PegawaiController::class);
 
-Route::get('pegawai', 'App\Http\Controllers\PegawaiController@index')->name('pegawai.index');
+    Route::get('pegawai', 'App\Http\Controllers\PegawaiController@index')->name('pegawai.index');
+	Route::post('/pegawai/getdata', 'App\Http\Controllers\PegawaiController@getData')->name('get.data');
+
     Route::get('pegawai/create', 'App\Http\Controllers\PegawaiController@create')->name('pegawai.create');
     Route::post('pegawai/store', 'App\Http\Controllers\PegawaiController@store')->name('pegawai.store');
+	Route::get('/asset/show/{id}', 'App\Http\Controllers\PegawaiController@show')->name('pegawai.show');
     Route::get('pegawai/{id}/edit', 'App\Http\Controllers\PegawaiController@edit')->name('pegawai.edit');
     Route::post('pegawai/update/{id}', 'App\Http\Controllers\PegawaiController@update')->name('pegawai.update');
     Route::delete('pegawai/delete/{id}', 'App\Http\Controllers\PegawaiController@destroy')->name('pegawai.delete');
 
+    //Routing Asset
+		// Route::get('/asset', 'AssetController@index')->name('asset');
+		// Route::post('/asset/getdata', 'AssetController@getData')->name('asset.data');
+
+		// Route::get('/asset/show/{id}', 'AssetController@show')->name('asset.show');
+
+		// Route::get('/asset/edit/{id}', 'AssetController@edit')->name('asset.edit');
+		// Route::post('/asset/saveedit/{id}', 'AssetController@saveEdit')->name('asset.saveedit');
+
+		// Route::get('/asset/create', 'AssetController@create')->name('asset.create');
+		// Route::post('/asset/savecreate', 'AssetController@saveCreate')->name('asset.savecreate');
+
+		// Route::delete('/asset/delete/{id?}', 'AssetController@delete')->name('asset.delete');
+
+		// Route::post('/asset/rekap/{id}', 'AssetController@rekap')->name('asset.rekap');
+		// Route::post('/asset/rekapdp/{id}', 'AssetController@rekapdp')->name('asset.rekapdp');
 
 //Route get => pegawai => index
 //Route get => pegawai/create => create

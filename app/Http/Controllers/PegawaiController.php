@@ -8,6 +8,7 @@ use App\Models\Pegawai;
 use App\Exports\PegawaiExport;
 use App\Imports\PegawaiImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Datatables;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\PegawaiRequest;
@@ -18,18 +19,15 @@ class Pegawaicontroller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(){
+
+        return view('pegawai.index');
+    }
+
+    public function getData(Request $request)
     {
-        $keyword = $request->keyword;
-            // $datas = Pegawai::all();
-        $datas = Pegawai::where('nama', 'LIKE', '%'.$keyword.'%')
-        ->orwhere('gelar','LIKE', '%'.$keyword.'%')
-        ->orwhere('nip','LIKE', '%'.$keyword.'%')
-        ->paginate();
-        return view('pegawai.index', compact(
-        'datas','keyword'
-       ));
         
+        return Datatables::of(Pegawai::orderBy('id', 'desc')->get())->addIndexColumn()->make(true);
     }
 
     public function cetakPegawai(Request $request)
@@ -106,7 +104,7 @@ class Pegawaicontroller extends Controller
      */
     public function show($id)
     {
-        //
+        $model = Pegawai::find($id);
     }
 
     /**

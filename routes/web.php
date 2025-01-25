@@ -4,6 +4,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContohController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaginationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmailController;
@@ -20,9 +21,9 @@ use App\Http\Controllers\EmailController;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
 
 // Route::get('/', 'App\Http\Controllers\PegawaiController@index')->name('pegawai.index');
 Route::get('/halo', function() {
@@ -40,21 +41,53 @@ Route::get('home/contoh',[HomeController::class,'contoh']);
 Route::post('home/contoh',[HomeController::class,'contoh_post']);
 
 
+Route::redirect('/', '/login');
+
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/register', 'viewRegister')->name('register');
+    Route::post('/register', 'register')->name('store.register');
+    Route::get('/login', 'viewLogin')->name('login');
+    Route::post('/login', 'login')->name('store.login');
+    Route::get('/logout', 'logout')->name('logout');
+
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [LoginController::class, 'dashboard']);
+    Route::resource('/settings', SettingController::class);
+
+  	Route::controller(UserController::class)->group(function () {
+        Route::resource('/users', UserController::class);
+        Route::get('/users-datatable', 'datatableUser');
+        Route::get('/changepass',  'changePass');
+        Route::post('/changepass/{id}',  'changePassSubmit')->name('changepass');
+    });
+
+	Route::controller(PegawaiController::class)->group(function () {
+		Route::resource('/pegawai', PegawaiController::class);
+		Route::get('/pegawai-datatable', 'datatablePegawai');
+		Route::post('/importpegawai','pegawaiimportexcel')->name('importpegawai');
+		Route::get('/exportpegawai','pegawaiexport')->name('exportpegawai');
+		Route::get('cetak-pegawai', 'cetakPegawai')->name('cetak-pegawai');
+	});	
+
+	
+});
 // Route::get('/contoh',[ContohController::class,'index']);
 // Route::get('/contoh/create',[ContohController::class,'create']);
 // Route::get('/contoh/create',[ContohController::class,'store']);
 // Route::resource('contoh',ContohController::class);
 // Route::resource('Pegawai',PegawaiController::class);
 
-    Route::get('pegawai', 'App\Http\Controllers\PegawaiController@index')->name('pegawai.index');
-	Route::post('/pegawai/getdata', 'App\Http\Controllers\PegawaiController@getData')->name('get.data');
+    // Route::get('pegawai', 'App\Http\Controllers\PegawaiController@index')->name('pegawai.index');
+	// Route::post('/pegawai/getdata', 'App\Http\Controllers\PegawaiController@getData')->name('get.data');
 
-    Route::get('pegawai/create', 'App\Http\Controllers\PegawaiController@create')->name('pegawai.create');
-    Route::post('pegawai/store', 'App\Http\Controllers\PegawaiController@store')->name('pegawai.store');
-	Route::get('/asset/show/{id}', 'App\Http\Controllers\PegawaiController@show')->name('pegawai.show');
-    Route::get('pegawai/{id}/edit', 'App\Http\Controllers\PegawaiController@edit')->name('pegawai.edit');
-    Route::post('pegawai/update/{id}', 'App\Http\Controllers\PegawaiController@update')->name('pegawai.update');
-    Route::delete('pegawai/delete/{id}', 'App\Http\Controllers\PegawaiController@destroy')->name('pegawai.delete');
+    // Route::get('pegawai/create', 'App\Http\Controllers\PegawaiController@create')->name('pegawai.create');
+    // Route::post('pegawai/store', 'App\Http\Controllers\PegawaiController@store')->name('pegawai.store');
+	// Route::get('/asset/show/{id}', 'App\Http\Controllers\PegawaiController@show')->name('pegawai.show');
+    // Route::get('pegawai/{id}/edit', 'App\Http\Controllers\PegawaiController@edit')->name('pegawai.edit');
+    // Route::post('pegawai/update/{id}', 'App\Http\Controllers\PegawaiController@update')->name('pegawai.update');
+    // Route::delete('pegawai/delete/{id}', 'App\Http\Controllers\PegawaiController@destroy')->name('pegawai.delete');
 
     //Routing Asset
 		// Route::get('/asset', 'AssetController@index')->name('asset');
@@ -85,9 +118,7 @@ Route::post('home/contoh',[HomeController::class,'contoh_post']);
 // Route::get('/pagination/show_api',[PaginationController::class,'show_api']);
 
 
-Route::post('/importpegawai','App\Http\Controllers\PegawaiController@pegawaiimportexcel')->name('importpegawai');
-Route::get('/exportpegawai','App\Http\Controllers\PegawaiController@pegawaiexport')->name('exportpegawai');
-Route::get('cetak-pegawai', 'App\Http\Controllers\PegawaiController@cetakPegawai')->name('cetak-pegawai');
+
 
 // Route::get('/login', 'App\Http\Controllers\Auth\LoginController@logout')->name('/login');
 // Route::get('send-mail', function () {

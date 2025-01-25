@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title','Pegawai Create')
+@section('title','Users Create')
 
 @section('content')
 
@@ -8,7 +8,7 @@
 	<div class="page-header page-header-light">
 		<div class="page-header-content header-elements-md-inline">
 			<div class="page-title d-flex">
-				<h4>Tambah Pegawai</h4>
+				<h4>Tambah User</h4>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 		</div>
@@ -23,40 +23,59 @@
 			<div class="card-header header-elements-inline">
 			</div>
 			<div class="card-body">
-				<form id="submit-form" class="form-validate-jquery" action="{{url('/pegawai')}}" method="post">
+				<form id="submit-form" class="form-validate-jquery" action="{{url('/users')}}" method="post">
 					@csrf
 					<fieldset class="mb-3">
-						<legend class="text-uppercase font-size-sm font-weight-bold">Data Pegawai</legend>
+						<legend class="text-uppercase font-size-sm font-weight-bold">Data User</legend>
 
                         <div class="form-group row">
-							<label class="col-form-label col-lg-2">Nama</label>
+							<label class="col-form-label col-lg-2">Username <span class="text-danger">*</span> </label>
 							<div class="col-lg-10">
-								<input type="text" name="nama" class="form-control border-teal border-1 @error('nama') is-invalid @enderror" placeholder="Nama" required autofocus autocomplete="off" value="{{ old('nama') }}">
+								<input type="text" name="username" class="form-control border-teal border-1 @error('username') is-invalid @enderror" placeholder="Username" required autocomplete="off" value="{{ old('username') }}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label col-lg-2">Password <span class="text-danger">*</span> </label>
+							<div class="col-lg-10">
+								<input type="password" name="password" class="form-control border-teal border-1 @error('password') is-invalid @enderror" placeholder="Password" required autocomplete="off" value="{{ old('password') }}">
 							</div>
 						</div>
                         <div class="form-group row">
-							 <label class="col-form-label col-lg-2">Tanggal Lahir</label>
+							<label class="col-form-label col-lg-2">Nama <span class="text-danger">*</span> </label>
+							<div class="col-lg-10">
+								<input type="text" name="name" class="form-control border-teal border-1 @error('nama') is-invalid @enderror" placeholder="Nama" required autofocus autocomplete="off" value="{{ old('nama') }}">
+							</div>
+						</div>
+						{{-- <div class="form-group row">
+							<label class="col-form-label col-lg-2">No HP </label>
+							<div class="col-lg-10">
+								<input type="number" maxlength="15" name="no_hp" id="no_hp" class="form-control border-teal border-1 @error('no_hp') is-invalid @enderror" placeholder="628999999999999" autofocus autocomplete="off" value="{{ old('no_hp') }}">
+							</div>
+						</div> --}}
+                        <div class="form-group row">
+							<label class="col-form-label col-lg-2">Email</label>
+							<div class="col-lg-10">
+								<input type="email" name="email" class="form-control border-teal border-1 @error('email') is-invalid @enderror" placeholder="user@email.com" autocomplete="off" value="{{ old('email') }}">
+							</div>
+						</div>
+						{{-- <div class="form-group row">
+                            <label class="col-form-label col-lg-2">Role <span class="text-danger">*</span></label>
                             <div class="col-lg-10">
-                                <input id="tanggal_lahir" name="tanggal_lahir" type="date" class="form-control pickadate-accessibility border-teal border-1" placeholder="Pilih Tanggal"  required>
+                                <select name="role_id" class="form-control form-control-select2" data-container-css-class="border-teal" data-dropdown-css-class="border-teal" required>
+                                    @foreach ($roles as $role)
+                                        @if (auth()->user()->role_id == 7 && $role->id == 6)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @elseif (auth()->user()->role_id != 7)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
                             </div>
-						</div>
-                        <div class="form-group row">
-							<label class="col-form-label col-lg-2">Gelar</label>
-							<div class="col-lg-10">
-								<input type="text" name="gelar" class="form-control border-teal border-1 @error('gelar') is-invalid @enderror" placeholder="Gelar" required autofocus autocomplete="off" value="{{ old('gelar') }}">
-							</div>
-						</div>
-                        <div class="form-group row">
-							<label class="col-form-label col-lg-2">NIP</label>
-							<div class="col-lg-10">
-								<input type="text" name="nip" class="form-control border-teal border-1 @error('nip') is-invalid @enderror" placeholder="NIP" required autofocus autocomplete="off" value="{{ old('nip') }}">
-							</div>
-						</div>
-                        
-                        
+                        </div> --}}
+
 					</fieldset>
 					<div class="text-right">
-						<a href="{{ url('/pegawai')}}" class="btn btn-light">Kembali <i class="icon-undo"></i></a>
+						<a href="{{ url('/users')}}" class="btn btn-light">Kembali <i class="icon-undo"></i></a>
 						<button type="submit" class="btn btn-primary submitBtn">Simpan <i class="icon-paperplane ml-2"></i></button>
 					</div>
 				</form>
@@ -88,117 +107,38 @@
 	<script src="{{asset('global_assets/js/demo_pages/form_inputs.js')}}"></script>
 	<script src="{{asset('global_assets/js/demo_pages/form_checkboxes_radios.js')}}"></script>
 	<script type="text/javascript">
+		// document.getElementById('no_hp').addEventListener('keydown', function(event) {
+        //     const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+        //     if (!allowedKeys.includes(event.key) && !/[0-9]/.test(event.key)) {
+        //         event.preventDefault();
+        //     }
+        // });
 
+        // document.getElementById('no_hp').addEventListener('paste', function(event) {
+        //     const pastedData = event.clipboardData.getData('Text');
+        //     if (!/^\d+$/.test(pastedData)) {
+        //         event.preventDefault();
+        //     }
+        // });
 
-        // Accessibility labels
-        $('.pickadate-accessibility').pickadate({
-            labelMonthNext: 'Go to the next month',
-            labelMonthPrev: 'Go to the previous month',
-            labelMonthSelect: 'Pick a month from the dropdown',
-            labelYearSelect: 'Pick a year from the dropdown',
-            selectMonths: true,
-            selectYears: 120,
-            format: 'yyyy-mm-dd',
-        });
 
         $('#submit-form').on('submit', function(e){
             var empty = false;
-            var isKtpValid = true;
-
             $('#submit-form').find('[required]').each(function() {
                 if ($(this).val() == '') {
                     empty = true;
                 }
             });
 
-           
-            if (empty || !isKtpValid) {
+            console.log(empty)
+            if (empty) {
+                e.preventDefault();
                 $(".submitBtn").attr("disabled", false);
                 return false;
             } else {
                 return true;
             }
-        });
-
-        $(document).ready(function () {
-            initializeValidation('#no_rekening');
-            initializeValidation('#no_hp');
-
-            function initializeValidation(selector) {
-                const $input = $(selector);
-
-                $input.val('');
-                $input.off('input', validateNumberInput);
-                $input.on('input', validateNumberInput);
-
-                $input.on('paste', function(event) {
-                    event.preventDefault();
-                    const pastedData = event.originalEvent.clipboardData.getData('text');
-                    const filteredData = pastedData.replace(/[^0-9]/g, '');
-
-                    $input.val(filteredData);
-                });
-            }
-
-            function validateNumberInput() {
-
-                $(this).val($(this).val().replace(/\D/g, ''));
-            }
-        });
-
-        $(document).ready(function () {
-            const $identificationIdSelect = $('#identification_id');
-            const $identificationNumberInput = $('#identification_number');
-            const $ktpErrorDiv = $('#ktp-error');
-
-            initializeValidation();
-
-            $identificationIdSelect.on('change', function () {
-                applyValidation($(this).val());
-            });
-
-            function initializeValidation() {
-                const selectedId = $identificationIdSelect.val();
-                applyValidation(selectedId);
-            }
-
-            function applyValidation(selectedId) {
-
-                $identificationNumberInput.val('');
-                $identificationNumberInput.off('input', validateNumberInput);
-                $ktpErrorDiv.hide();
-
-                if (selectedId == 1) {
-                    $identificationNumberInput.attr('maxlength', 16);
-                    $ktpErrorDiv.show().text('Nomor KTP harus terdiri dari 16 angka.');
-                    $identificationNumberInput.on('input', validateNumberInput);
-                } else if (selectedId == 2) {
-                    $identificationNumberInput.removeAttr('maxlength');
-                    $ktpErrorDiv.hide();
-                    $identificationNumberInput.on('input', validateNumberInput);
-                } else {
-                    $identificationNumberInput.attr('maxlength', 16);
-                    $ktpErrorDiv.hide();
-                    $identificationNumberInput.on('input', validateNumberInput);
-                }
-            }
-
-            function validateNumberInput() {
-                const selectedId = $identificationIdSelect.val();
-
-                if (selectedId == 1) {
-                    $identificationNumberInput.val($identificationNumberInput.val().replace(/\D/g, ''));
-                    if ($identificationNumberInput.val().length !== 16) {
-                        $ktpErrorDiv.show().text('Nomor KTP harus terdiri dari 16 angka.');
-                    } else {
-                        $ktpErrorDiv.hide();
-                    }
-                } else {
-                    $ktpErrorDiv.hide();
-                }
-            }
-        });
-
+        })
 
 		var FormValidation = function() {
 
@@ -249,12 +189,27 @@
 		                }
 		            },
 		            messages: {
-		                nama_lengkap: {
+		                nama: {
 		                    required: 'Mohon diisi.'
 		                },
-		                // email: {
-		                //     required: 'Mohon diisi.'
-		                // },
+		                email: {
+		                    required: 'Mohon diisi.'
+		                },
+		                no_telp: {
+		                    required: 'Mohon diisi.'
+		                },
+		                username: {
+		                    required: 'Mohon diisi.'
+		                },
+		                password: {
+		                    required: 'Mohon diisi.'
+		                },
+		                role: {
+		                    required: 'Mohon diisi.'
+		                },
+		                cabang_id: {
+		                    required: 'Mohon diisi.'
+		                },
 		            },
 		        });
 

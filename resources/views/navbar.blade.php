@@ -3,6 +3,7 @@
 	<div class="navbar-brand" style="padding-top: 0px;padding-bottom: 0px;min-width:100px">
 		<a class="d-inline-block">
 			<img src="{{ URL::asset('global_assets/images/planet_namek.png') }}" alt="" style="height:48px">
+			
 		</a>
 	</div>
 
@@ -56,7 +57,7 @@
 			<li class="nav-item dropdown dropdown-user"style='list-style-type:none;'>
 				<a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
 					<img src="{{ URL::asset('global_assets/images/user-default.png') }}" class="rounded-circle mr-2" height="34" alt="">
-					<span>{{\Auth::user()->nama}}</span>
+					<span>{{\Auth::user()->name}}</span>
 				</a>
 
 				<div class="dropdown-menu dropdown-menu-right">

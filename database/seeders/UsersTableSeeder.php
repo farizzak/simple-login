@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UsersTableSeeder extends Seeder
 {
@@ -15,7 +17,7 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'Super Admin',
-            // 'username' => 'administrator',
+            'username' => 'administrator',
             'password' => bcrypt('rahasia123'),
             'email' => 'admin@cobain.web.id',
             // 'role' => '1',

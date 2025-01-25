@@ -32,12 +32,33 @@
     
                     <!-- Main -->
                     <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Menu</div> <i class="icon-menu" title="Main"></i></li>
-    
+
                     <li class="nav-item">
-                        <a href="#" class="nav-link {{ (request()->is('admin*')) ? 'active' : '' }}">
+                        <a href="/dashboard" class="nav-link {{ (request()->is('dashboard*')) ? 'active' : '' }}">
                             <i class="icon-home4"></i>
                             <span>
                                 Dashboard
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">MASTER</div> <i class="icon-menu" title="Main"></i></li>
+
+                    <li class="nav-item">
+                        <a href="{{ url('/pegawai') }}" class="nav-link {{ (request()->is('pegawai*')) ? 'active' : '' }}">
+                            <i class="icon-users4"></i>
+                            <span>
+                                Pegawai
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">SETTING</div> <i class="icon-menu" title="Main"></i></li>
+                    <li class="nav-item">
+                        <a href="{{ url('/users') }}" class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}">
+                            <i class="icon-user"></i>
+                            <span>
+                                Users
                             </span>
                         </a>
                     </li>

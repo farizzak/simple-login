@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pegawai;
+use App\Models\TPegawai;
 
 use App\Exports\PegawaiExport;
 use App\Imports\PegawaiImport;
@@ -20,21 +20,21 @@ class Pegawaicontroller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-
-        return view('pegawai.index');
+        $results['pegawai'] = TPegawai::all();
+        return view('pegawai.index',$results);
     }
 
-    public function getData(Request $request)
+    public function datatablePegawai(Request $request)
     {
         
-        return Datatables::of(Pegawai::orderBy('id', 'desc')->get())->addIndexColumn()->make(true);
+        return Datatables::of(TPegawai::orderBy('id', 'desc')->get())->addIndexColumn()->make(true);
     }
 
     public function cetakPegawai(Request $request)
     {
         $keyword = $request->keyword;
             // $datas = Pegawai::all();
-        $datas = Pegawai::where('nama', 'LIKE', '%'.$keyword.'%')
+        $datas = TPegawai::where('nama', 'LIKE', '%'.$keyword.'%')
         ->orwhere('gelar','LIKE', '%'.$keyword.'%')
         ->orwhere('nip','LIKE', '%'.$keyword.'%')
         ->paginate();
@@ -69,7 +69,7 @@ class Pegawaicontroller extends Controller
      */
     public function create()
     {
-        $model = new Pegawai;
+        $pegawai = new TPegawai;
         return view('pegawai.create',compact('model'
     ));
     
@@ -86,14 +86,14 @@ class Pegawaicontroller extends Controller
        $request->validate([
         'tanggal_lahir'=>'required'
        ]);
-        $model = new Pegawai;
-        $model->nama = $request->nama;
-        $model->tanggal_lahir = $request->tanggal_lahir;
-        $model->gelar = $request->gelar;
-        $model->nip = $request->nip;
-        $model->save();
+        $pegawai = new TPegawai;
+        $pegawai->nama = $request->nama;
+        $pegawai->tanggal_lahir = $request->tanggal_lahir;
+        $pegawai->gelar = $request->gelar;
+        $pegawai->nip = $request->nip;
+        $pegawai->save();
 
-        return redirect('pegawai')->with('success', "Data berhasil disimpan");
+        return redirect('pegawai')->with('success', "Data Pegawai berhasil disimpan");
     }
 
     /**
@@ -104,7 +104,7 @@ class Pegawaicontroller extends Controller
      */
     public function show($id)
     {
-        $model = Pegawai::find($id);
+        $pegawai = TPegawai::find($id);
     }
 
     /**
@@ -115,9 +115,8 @@ class Pegawaicontroller extends Controller
      */
     public function edit($id)
     {
-        $model = Pegawai::find($id);
-        return view('pegawai.edit',compact('model'
-    ));
+        $results['pegawai'] = TPegawai::findOrFail($id);
+        return view('pegawai.edit',$results);
     }
 
     /**
@@ -132,15 +131,15 @@ class Pegawaicontroller extends Controller
         $request->validate([
             'tanggal_lahir'=>'required'
            ]);
-        $model = Pegawai::find($id);
-        $model->nama = $request->nama;
-        $model->tanggal_lahir = $request->tanggal_lahir;
-        $model->gelar = $request->gelar;
-        $model->nip = $request->nip;
-        // dd($model);
-        $model->save();
+        $pegawai = TPegawai::find($id);
+        $pegawai->nama = $request->nama;
+        $pegawai->tanggal_lahir = $request->tanggal_lahir;
+        $pegawai->gelar = $request->gelar;
+        $pegawai->nip = $request->nip;
+        // dd($pegawai);
+        $pegawai->save();
 
-        return redirect('pegawai')->with('success', "Data berhasil diperbaharui");
+        return redirect('pegawai')->with('success', "Data Pegawai berhasil diperbaharui");
     }
 
     /**
@@ -151,8 +150,8 @@ class Pegawaicontroller extends Controller
      */
     public function destroy($id)
     {
-        $model = Pegawai::find($id);
-        $model->delete();
-        return redirect('pegawai');
+        $pegawai = TPegawai::find($id);
+        $pegawai->delete();
+        return redirect('/pegawai')->with('success', 'owner deleted!');
     }
 }
